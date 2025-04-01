@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eidi Collection - Maheen</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #000, #b8860b);
+            color: white;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        .animated-title {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px gold, 0 0 20px gold;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px gold, 0 0 20px gold;
+            }
+            to {
+                text-shadow: 0 0 20px orange, 0 0 30px orange;
+            }
+        }
+
+        .collect-btn {
+            background: gold;
+            padding: 15px 30px;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gold;
+        }
+
+        .collect-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .glassy-input {
+            padding: 10px;
+            font-size: 1.2rem;
+            border: 2px solid gold;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .popup {
+            display: none;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px gold;
+        }
+
+        .money-burst {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+        }
+
+        .money {
+            position: absolute;
+            width: 80px;
+            height: auto;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            from { 
+                transform: translateY(-100vh) rotate(0deg); 
+                opacity: 1; 
+            }
+            to { 
+                transform: translateY(100vh) rotate(360deg); 
+                opacity: 0; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title animated-title">🎉Maheen! Niche se mile gi Eidi 💰</h1>
+        <button id="collectBtn" class="collect-btn">Eidi Lelo 🥳💸</button>
+    </div>
+
+    <!-- Popup for Account Number Input -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <h2 class="popup-title">Apna Account Number daalo jo bi hai tumhare pss! 🎁</h2>
+            <input type="text" id="accountNumber" class="glassy-input" placeholder="Enter Account Number">
+            <button id="submitBtn" class="collect-btn">Submit</button>
+            <p class="note">“Don’t worry, this is just for fun! Your Eidi is waiting! 😉”</p>
+        </div>
+    </div>
+
+    <!-- Confirmation Popup -->
+    <div id="confirmationPopup" class="popup">
+        <div class="popup-content">
+            <h2>✅ Done! Bss aa rhi hai Eidi raaste me hai, ek mssg krna mujh ye fill krne k bd🙂🚀💸</h2>
+            <p class="confirmation-text">Thora sa wait krna prhe ga apko!</p>
+            <button id="closeBtn" class="collect-btn">Nahi sabr nhi hai jldi do 😒</button>
+        </div>
+    </div>
+
+    <!-- Container for money explosion -->
+    <div id="moneyExplosion" class="money-burst"></div>
+
+    <!-- Sound Effect -->
+    <audio id="chaChingSound" src="cha-ching.mp3"></audio>
+
+    <script>
+        // When the "Eidi Lelo" button is clicked, show the account input popup
+        document.getElementById("collectBtn").addEventListener("click", function() {
+            document.getElementById("popup").style.display = "block";
+        });
+
+        // When the "Submit" button is clicked, hide account input and show confirmation popup
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("confirmationPopup").style.display = "block";
+        });
+
+        // When the "Close" button is clicked, trigger the money explosion and hide confirmation popup
+        document.getElementById("closeBtn").addEventListener("click", function() {
+            document.getElementById("confirmationPopup").style.display = "none";
+            triggerMoneyExplosion();
+        });
+
+        // Function to trigger money explosion
+        function triggerMoneyExplosion() {
+            const moneyContainer = document.getElementById("moneyExplosion");
+            moneyContainer.innerHTML = "";
+
+            // Create 30 money elements to simulate explosion
+            for (let i = 0; i < 30; i++) {
+                let money = document.createElement("img");
+                money.src = "money.png";  // Ensure the image file exists in your project folder
+                money.className = "money";
+                money.style.left = Math.random() * 100 + "vw";  // Random horizontal position
+                money.style.animationDuration = (Math.random() * 3 + 2) + "s"; // Random duration for each money piece
+                moneyContainer.appendChild(money);
+            }
+
+            // Play the sound effect for money explosion
+            document.getElementById("chaChingSound").play();
+
+            // Clear the money explosion after 5 seconds
+            setTimeout(() => {
+                moneyContainer.innerHTML = "";
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
